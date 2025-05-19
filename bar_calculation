@@ -1,0 +1,765 @@
+import copy
+
+# Данные о напитках
+drinks = [
+    {
+        'name': 'Апельсиновый сок',
+        'level_required': 1,
+        'resources': {'апельсиновый сок': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Содовая вода',
+        'level_required': 1,
+        'resources': {'содовая вода': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Ананасовый сок',
+        'level_required': 1,
+        'resources': {'ананасовый сок': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Кола',
+        'level_required': 1,
+        'resources': {'кола': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Бренди',
+        'level_required': 1,
+        'resources': {'бренди': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Виски',
+        'level_required': 1,
+        'resources': {'виски': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Водка',
+        'level_required': 1,
+        'resources': {'водка': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Джин',
+        'level_required': 1,
+        'resources': {'джин': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Текила',
+        'level_required': 1,
+        'resources': {'текила': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Ром',
+        'level_required': 1,
+        'resources': {'ром': 3},
+        'reward_vouchers': 15,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Отвертка',
+        'level_required': 1,
+        'resources': {'водка': 2, 'апельсиновый сок': 3},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Гремучая змея',
+        'level_required': 2,
+        'resources': {'виски': 1, 'кофейный ликер': 3},
+        'reward_vouchers': 20,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Черный русский',
+        'level_required': 2,
+        'resources': {'водка': 1, 'кофейный ликер': 4},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Кофейный Мартини',
+        'level_required': 2,
+        'resources': {'водка': 1, 'кофейный ликер': 3},
+        'reward_vouchers': 20,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Кислый ананасовый сок',
+        'level_required': 3,
+        'resources': {'лимонный сок': 1, 'ананасовый сок': 3},
+        'reward_vouchers': 20,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Текила кислая',
+        'level_required': 3,
+        'resources': {'текила': 1, 'лимонный сок': 3, 'сироп из тростника': 3},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Водка кислая',
+        'level_required': 3,
+        'resources': {'водка': 1, 'лимонный сок': 3, 'сироп из тростника': 3},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Мохито',
+        'level_required': 3,
+        'resources': {'ром': 2, 'лимонный сок': 1, 'содовая вода': 2},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Сладкий лимон',
+        'level_required': 4,
+        'resources': {'сахар': 2, 'лимонный сок': 1, 'мед': 3},
+        'reward_vouchers': 30,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Сладкий апельсин',
+        'level_required': 4,
+        'resources': {'сахар': 3, 'кола': 2, 'апельсиновый сок': 2},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Синий блейзер',
+        'level_required': 4,
+        'resources': {'виски': 1, 'сахар': 3},
+        'reward_vouchers': 20,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Французский 75',
+        'level_required': 4,
+        'resources': {'водка': 1, 'сироп из тростника': 3, 'лимонный сок': 2},
+        'reward_vouchers': 30,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Бернис',
+        'level_required': 4,
+        'resources': {'водка': 1, 'сироп из тростника': 3, 'лимонный сок': 3},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Медовая газировка',
+        'level_required': 5,
+        'resources': {'сливки': 1, 'мед': 3, 'содовая вода': 3},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Майя',
+        'level_required': 5,
+        'resources': {'текила': 1, 'кофейный ликер': 2, 'ананасовый сок': 2},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Бренди Александр',
+        'level_required': 5,
+        'resources': {'бренди': 1, 'кофейный ликер': 2, 'сливки': 2},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Грязный банан',
+        'level_required': 5,
+        'resources': {'сливки': 1, 'кофейный ликер': 3, 'ром': 2},
+        'reward_vouchers': 30,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Линчбургский лимонад',
+        'level_required': 6,
+        'resources': {'виски': 1, 'тройной ликер': 1, 'лимонный сок': 3, 'содовая вода': 3},
+        'reward_vouchers': 55,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Матадор',
+        'level_required': 6,
+        'resources': {'текила': 1, 'тройной ликер': 3, 'лимонный сок': 3},
+        'reward_vouchers': 55,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Хэнки-Пэнки',
+        'level_required': 7,
+        'resources': {'джин': 1, 'вермут': 2},
+        'reward_vouchers': 28,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Маргарита',
+        'level_required': 7,
+        'resources': {'текила': 1, 'тройной ликер': 2, 'лимонный сок': 2},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Фицджеральд',
+        'level_required': 8,
+        'resources': {'джин': 1, 'сироп из тростника': 1, 'лимонный сок': 1, 'горечь': 3},
+        'reward_vouchers': 50,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Сухой мартини',
+        'level_required': 8,
+        'resources': {'джин': 1, 'вермут': 3, 'горечь': 3},
+        'reward_vouchers': 72,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Белый русский',
+        'level_required': 9,
+        'resources': {'водка': 1, 'бейлис': 2, 'сливки': 2},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Я тебя люблю',
+        'level_required': 9,
+        'resources': {'бейлис': 2, 'кофейный ликер': 1, 'ром': 2},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Плейбой',
+        'level_required': 10,
+        'resources': {'виски': 1, 'вермут': 3, 'кампари': 3},
+        'reward_vouchers': 72,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Негрони',
+        'level_required': 10,
+        'resources': {'джин': 2, 'кампари': 2, 'вермут': 3},
+        'reward_vouchers': 66,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Текила сансет',
+        'level_required': 11,
+        'resources': {'текила': 1, 'фруктовый сироп': 3, 'лимонный сок': 2},
+        'reward_vouchers': 55,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Текила санрайз',
+        'level_required': 11,
+        'resources': {'текила': 1, 'фруктовый сироп': 3, 'апельсиновый сок': 3},
+        'reward_vouchers': 61,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Ядерная бомба Дай Цзили',
+        'level_required': 12,
+        'resources': {'ром': 1, 'вино из крапивы': 1, 'лимонный сок': 3},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Стань знаменитым',
+        'level_required': 13,
+        'resources': {'текила': 1, 'апероль': 2, 'вино из крапивы': 3},
+        'reward_vouchers': 67,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Апероль лайт',
+        'level_required': 14,
+        'resources': {'вино': 1, 'апероль': 2, 'содовая вода': 3},
+        'reward_vouchers': 49,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Лимонные пузыри',
+        'level_required': 14,
+        'resources': {'вино': 1, 'тройной ликер': 2, 'содовая вода': 2},
+        'reward_vouchers': 49,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Гарибальди',
+        'level_required': 15,
+        'resources': {'кампари': 1, 'сироп из тростника': 2, 'апельсиновый сок': 2},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Печенье с джемом',
+        'level_required': 15,
+        'resources': {'фруктовый ликер': 1, 'сливки': 2},
+        'reward_vouchers': 25,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Имбирная кола',
+        'level_required': 16,
+        'resources': {'имбирное пиво': 1, 'кола': 3},
+        'reward_vouchers': 40,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Глубинная бомба',
+        'level_required': 16,
+        'resources': {'водка': 1, 'имбирное пиво': 3},
+        'reward_vouchers': 67,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Освежающая газировка',
+        'level_required': 17,
+        'resources': {'мята': 1, 'газировка': 3},
+        'reward_vouchers': 67,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Бобби Боллс',
+        'level_required': 18,
+        'resources': {'виски': 1, 'вермут': 2, 'лаунж-бар': 2},
+        'reward_vouchers': 75,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Мегаполис',
+        'level_required': 19,
+        'resources': {'водка': 1, 'сок': 2, 'лимонный сок': 3},
+        'reward_vouchers': 74,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Кровавая Мэри',
+        'level_required': 20,
+        'resources': {'водка': 1, 'соус чили': 1, 'томатный сок': 3},
+        'reward_vouchers': 87,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Коляска',
+        'level_required': 21,
+        'resources': {'бренди': 1, 'тройной ликер': 2, 'лимонный сок': 2, 'бейлис': 2},
+        'reward_vouchers': 66,
+        'reward_glory': 19
+    },
+    {
+        'name': 'Голубь',
+        'level_required': 22,
+        'resources': {'текила': 1, 'фруктовый сироп': 2, 'лимонный сок': 2, 'содовая вода': 2},
+        'reward_vouchers': 66,
+        'reward_glory': 19
+    },
+    {
+        'name': 'Янки',
+        'level_required': 23,
+        'resources': {'кампари': 1, 'вермут': 3, 'содовая вода': 3},
+        'reward_vouchers': 81,
+        'reward_glory': 19
+    },
+    {
+        'name': 'Мятный джулеп',
+        'level_required': 24,
+        'resources': {'виски': 1, 'мята': 1, 'сироп из тростника': 2, 'горечь': 2},
+        'reward_vouchers': 37,
+        'reward_glory': 19
+    },
+    {
+        'name': 'Виски сауэр',
+        'level_required': 25,
+        'resources': {'виски': 1, 'сироп из тростника': 2, 'лимонный сок': 2, 'горечь': 3},
+        'reward_vouchers': 66,
+        'reward_glory': 19
+    },
+    {
+        'name': 'Лонг-Айленд',
+        'level_required': 5,
+        'resources': {'ром': 1, 'текила': 1, 'джин': 1, 'водка': 2},
+        'reward_vouchers': 25,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Куба Либре',
+        'level_required': 5,
+        'resources': {'ром': 2, 'кола': 3},
+        'reward_vouchers': 31,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Лодка в тумане №1',
+        'level_required': 5,
+        'resources': {'ром': 1, 'джин': 1, 'бренди': 1, 'лимонный сок': 3},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Палм-Бич',
+        'level_required': 5,
+        'resources': {'ром': 1, 'джин': 2, 'ананасовый сок': 3},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Между',
+        'level_required': 5,
+        'resources': {'ром': 1, 'бренди': 2, 'лимонный сок': 3},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Зомби',
+        'level_required': 5,
+        'resources': {'ром': 3, 'ананасовый сок': 1, 'лимонный сок': 2},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Джин с измельченным базиликом',
+        'level_required': 5,
+        'resources': {'джин': 1, 'сироп из тростника': 3, 'лимонный сок': 2},
+        'reward_vouchers': 37,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Кантаритос',
+        'level_required': 5,
+        'resources': {'текила': 1, 'содовая вода': 3, 'лимонный сок': 3},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Шипы',
+        'level_required': 5,
+        'resources': {'текила': 1, 'сироп из тростника': 3, 'лимонный сок': 3},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Рыбоводный резервуар',
+        'level_required': 5,
+        'resources': {'бренди': 1, 'ром': 2, 'лимонный сок': 2, 'сироп из тростника': 2},
+        'reward_vouchers': 35,
+        'reward_glory': 10
+    },
+    {
+        'name': 'Дай Джили',
+        'level_required': 5,
+        'resources': {'ром': 1, 'бренди': 2, 'лимонный сок': 3},
+        'reward_vouchers': 47,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Сингапурский слинг',
+        'level_required': 5,
+        'resources': {'джин': 1, 'тройной ликер': 3, 'ананасовый сок': 3, 'бренди': 2},
+        'reward_vouchers': 66,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Брендикасл',
+        'level_required':6,
+        'resources': {'сироп из тростника': 3, 'тройной ликер': 1, 'лимонный сок': 1, 'бренди': 1},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Кровь и песок',
+        'level_required': 7,
+        'resources': {'виски': 2, 'бренди': 2, 'ананасовый сок': 3, 'вермут': 2},
+        'reward_vouchers': 55,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Старая Куба',
+        'level_required': 8,
+        'resources': {'горечь': 1, 'ром': 3, 'лимонный сок': 2},
+        'reward_vouchers': 39,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Грязевой суп',
+        'level_required': 9,
+        'resources': {'водка': 1, 'кофейный ликер': 3, 'бейлис': 2},
+        'reward_vouchers': 44,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Медная иллюзия',
+        'level_required': 10,
+        'resources': {'джин': 2, 'тройной ликер': 2, 'кампари': 3},
+        'reward_vouchers': 66,
+        'reward_glory': 12
+    },
+    {
+        'name': 'Тринидадская кислота',
+        'level_required': 11,
+        'resources': {'виски': 1, 'фруктовый сироп': 3, 'лимонный сок': 3, 'горечь': 2},
+        'reward_vouchers': 85,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Последние слова',
+        'level_required': 12,
+        'resources': {'джин': 1, 'вино из крапивы': 3, 'лимонный сок': 3},
+        'reward_vouchers': 61,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Толстая шина',
+        'level_required': 13,
+        'resources': {'ром': 1, 'апероль': 1, 'ананасовый сок': 2, 'апельсиновый сок': 2},
+        'reward_vouchers': 43,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Ошибка',
+        'level_required': 14,
+        'resources': {'вермут': 2, 'кампари': 2, 'вино': 3},
+        'reward_vouchers': 85,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Бронкс',
+        'level_required': 15,
+        'resources': {'вермут': 2, 'горечь': 2, 'джин': 1, 'апельсиновый сок': 2},
+        'reward_vouchers': 67,
+        'reward_glory': 14
+    },
+    {
+        'name': 'Московский Мул',
+        'level_required': 16,
+        'resources': {'водка': 1, 'имбирное пиво': 3, 'лимонный сок': 2},
+        'reward_vouchers': 80,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Кристаллический коралл',
+        'level_required': 17,
+        'resources': {'текила': 1, 'фруктовый сироп': 2, 'фруктовый ликер': 2, 'газировка': 2},
+        'reward_vouchers': 100,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Сан-Франциско',
+        'level_required': 19,
+        'resources': {'водка': 1, 'тройной ликер': 2, 'ананасовый сок': 2, 'фруктовый сироп': 2},
+        'reward_vouchers': 74,
+        'reward_glory': 16
+    },
+    {
+        'name': 'Нью-Йорк Сауэр',
+        'level_required': 24,
+        'resources': {'виски': 1, 'лимонный сок': 2, 'сироп из тростника': 2, 'горечь': 2},
+        'reward_vouchers': 66,
+        'reward_glory': 19
+    }
+
+]
+
+# Функция для получения ресурсов в зависимости от уровня
+def get_available_resources(level):
+    # Здесь нужно определить ресурсы в зависимости от уровня
+    # Для примера возьмем фиксированные ресурсы:
+    return {
+    # Уровень 1
+    'апельсиновый сок': 4,
+    'содовая вода': 4,
+    'ананасовый сок': 4,
+    'кола': 4,
+    'бренди': 10,
+    'виски': 10,
+    'водка': 10,
+    'джин': 10,
+    'текила': 10,
+    'ром': 10,
+    # Уровень 2
+    'кофейный ликер': 4,
+    # Уровень 3
+    'лимонный сок': 4,
+    'сироп из тростника': 4,
+    # Уровень 4
+    'сахар': 4,
+    'мед': 4,
+    # Уровень 5
+    'сливки': 4,
+    # Уровень 6
+    'тройной ликер': 4,
+    # Уровень 7
+    'вермут': 4,
+    # Уровень 8
+    'горечь': 4,
+    # Уровень 9
+    'бейлис': 4,
+    # Уровень 10
+    'кампари': 4,
+    # Уровень 11
+    'фруктовый сироп': 4,
+    # Уровень 12
+    'вино из крапивы': 4,
+    # Уровень 13
+    'апероль': 4,
+    # Уровень 14
+    'вино': 4,
+    # Уровень 15
+    'фруктовый ликер': 4,
+    # Уровень 16
+    'имбирное пиво': 4,
+    # Уровень 17
+    'мята': 4,
+    'газировка': 4,
+    # Уровень 18
+    'Лаунж-бар': 4,
+    # Уровень 19
+    'сок': 4,
+    # Уровень 20
+    'соус чили': 4,
+    'томатный сок': 4,
+}
+
+# Информация о ресурсах и их уровнях разблокировки
+resources_info = {
+    'апельсиновый сок': {'unlock_level':1},
+    'содовая вода': {'unlock_level':1},
+    'ананасовый сок': {'unlock_level':1},
+    'кола': {'unlock_level':1},
+    'бренди': {'unlock_level':1},
+    'виски': {'unlock_level':1},
+    'водка': {'unlock_level':1},
+    'джин': {'unlock_level':1},
+    'текила': {'unlock_level':1},
+    'ром': {'unlock_level':1},
+    'кофейный ликер': {'unlock_level':2},
+    'лимонный сок': {'unlock_level':3},
+    'сироп из тростника': {'unlock_level':3},
+    'сахар': {'unlock_level':4},
+    'мед': {'unlock_level':4},
+    'сливки': {'unlock_level':5},
+    'тройной ликер': {'unlock_level':6},
+    'вермут': {'unlock_level':7},
+    'горечь': {'unlock_level':8},
+    'бейлис': {'unlock_level':9},
+    'кампари': {'unlock_level':10},
+    'фруктовый сироп': {'unlock_level':11},
+    'вино из крапивы': {'unlock_level':12},
+    'апероль': {'unlock_level':13},
+    'вино': {'unlock_level':14},
+    'фруктовый ликер': {'unlock_level':15},
+    'имбирное пиво': {'unlock_level':16},
+    'мята': {'unlock_level':17},
+    'газировка': {'unlock_level':17},
+    'Лаунж-бар': {'unlock_level':18},
+    'сок': {'unlock_level':19},
+    'соус чили': {'unlock_level':20},
+    'томатный сок': {'unlock_level':20}
+}
+
+# Ввод уровня игрока
+player_level = int(input("Введите ваш уровень: "))
+
+# Функция для поиска стратегии по максимизации целевой функции
+def find_strategy(level, resources, max_total_drinks, optimize_for='vouchers'):
+    available_resources = copy.deepcopy(resources)
+    selected_drinks = []
+
+    available_drinks = [d for d in drinks if level >= d['level_required']]
+
+    for _ in range(max_total_drinks):
+        best_drink = None
+        best_value = -1
+
+        for drink in available_drinks:
+            can_make = True
+            for res_name, amount_needed in drink['resources'].items():
+                if available_resources.get(res_name, 0) < amount_needed:
+                    can_make = False
+                    break
+            if not can_make:
+                continue
+
+            value = drink['reward_vouchers'] if optimize_for=='vouchers' else drink['reward_glory']
+
+            if value > best_value:
+                best_value = value
+                best_drink = drink
+
+        # Проверка после внутреннего цикла
+        if best_drink is None:
+            break  # Это внутри внешнего цикла for
+
+        max_count = float('inf')
+        for res_name, amount_needed in best_drink['resources'].items():
+            max_count = min(max_count, available_resources.get(res_name, 0) // amount_needed)
+
+        if max_count == 0:
+            break  # тоже внутри внешнего цикла
+
+        count_to_make = max_count
+
+        for res_name, amount_needed in best_drink['resources'].items():
+            available_resources[res_name] -= amount_needed * count_to_make
+
+        selected_drinks.append({
+            'name': best_drink['name'],
+            'count': count_to_make,
+            'total_vouchers': best_drink['reward_vouchers'] * count_to_make,
+            'total_glory': best_drink['reward_glory'] * count_to_make
+        })
+
+    return selected_drinks
+
+def suggest_full_strategy(level):
+     max_total_drinks = int(input("Введите максимально возможное количество напитков для приготовления: "))
+     current_resources = get_available_resources(level)
+
+     print(f"\nНа уровне {level} при имеющихся ресурсах:")
+
+     # Стратегия для максимизации ваучеров (выводим и ваучеры и славу)
+     vouchers_strategy = find_strategy(level, current_resources, max_total_drinks, optimize_for='vouchers')
+     total_vouchers = sum(d['total_vouchers'] for d in vouchers_strategy)
+     total_glory_vouchers_strategy = sum(d['total_glory'] for d in vouchers_strategy)
+
+     print("\nСтратегия для максимизации ваучеров:")
+     for d in vouchers_strategy:
+         print(f" - {d['name']}: {d['count']} шт. | Ваучеры: {d['total_vouchers']} | Слава: {d['total_glory']}")
+     print(f"Общие ваучеры: {total_vouchers}")
+     print(f"Общая слава (по стратегии ваучеров): {total_glory_vouchers_strategy}")
+
+     # Восстановим ресурсы для следующего поиска
+     current_resources = get_available_resources(level)
+
+     # Стратегия для максимизации славы (выводим и ваучеры и славу)
+     glory_strategy = find_strategy(level, current_resources, max_total_drinks, optimize_for='glory')
+     total_glory2 = sum(d['total_glory'] for d in glory_strategy)
+     total_vouchers_glory_strategy = sum(d['total_vouchers'] for d in glory_strategy)
+
+     print("\nСтратегия для максимизации славы:")
+     for d in glory_strategy:
+         print(f" - {d['name']}: {d['count']} шт. | Ваучеры: {d['total_vouchers']} | Слава: {d['total_glory']}")
+     print(f"Общая слава: {total_glory2}")
+     print(f"Общие ваучеры (по стратегии славы): {total_vouchers_glory_strategy}")
+
+if __name__ == "__main__":
+    suggest_full_strategy(player_level)
